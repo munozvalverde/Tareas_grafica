@@ -14,17 +14,7 @@ public class Vertice
         Z = z;
     }
 
-    public override bool Equals(object? obj)
-    {
-        if (obj is Vertice other)
-            return X == other.X && Y == other.Y && Z == other.Z;
-        return false;
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(X, Y, Z);
-    }
+    public Vertice() { }
 
 }
 

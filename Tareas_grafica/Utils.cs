@@ -3,65 +3,67 @@ namespace Tareas_grafica;
 
 public static class Utils
 {
-    public static Parte CrearBloque3D(List<Vertice> vertices, Color4 color)
+    public static Parte CrearBloque(List<Vertice> vertices, Color4 color)
     {
         if (vertices.Count != 8)
-            throw new ArgumentException("Se requieren 8 vértices para un bloque.");
+            throw new ArgumentException("Se requieren 8 vértices para dibujar un bloque");
 
-        var caras = new List<Cara>
-        {
-            // Cara frontal
-            new([vertices[0], vertices[1], vertices[2], vertices[3]], color),
-            // Cara trasera
-            new([vertices[4], vertices[5], vertices[6], vertices[7]], color),
-            // Cara lateral izquierda
-            new([vertices[0], vertices[4], vertices[7], vertices[3]], color),
-            // Cara lateral derecha
-            new([vertices[1], vertices[5], vertices[6], vertices[2]], color),
-            // Cara superior
-            new([vertices[0], vertices[4], vertices[5], vertices[1]], color),
-            // Cara inferior
-            new([vertices[3], vertices[7], vertices[6], vertices[2]], color)
-        };
-        return new Parte(caras);
+        var caras = new Dictionary<string, Cara>
+           {
+               // Cara frontal
+               { "frontside", new Cara(new Dictionary<string, Vertice>
+               {
+                   { "v1", vertices[0] },
+                   { "v2", vertices[1] },
+                   { "v3", vertices[2] },
+                   { "v4", vertices[3] }
+               }, Color4.Fuchsia) },
+               // Cara trasera
+               { "backside", new Cara(new Dictionary<string, Vertice>
+               {
+                   { "v1", vertices[4] },
+                   { "v2", vertices[5] },
+                   { "v3", vertices[6] },
+                   { "v4", vertices[7] }
+               }, Color4.Purple) },
+
+               // Cara lateral izquierda
+               { "leftside", new Cara(new Dictionary<string, Vertice>
+               {
+                   { "v1", vertices[0] },
+                   { "v2", vertices[4] },
+                   { "v3", vertices[7] },
+                   { "v4", vertices[3] }
+               }, color) },
+
+               // Cara lateral derecha
+               { "rightside", new Cara(new Dictionary<string, Vertice>
+               {
+                   { "v1", vertices[1] },
+                   { "v2", vertices[5] },
+                   { "v3", vertices[6] },
+                   { "v4", vertices[2] }
+               }, color) },
+
+               // Cara superior
+               { "upside", new Cara(new Dictionary<string, Vertice>
+               {
+                   { "v1", vertices[0] },
+                   { "v2", vertices[4] },
+                   { "v3", vertices[5] },
+                   { "v4", vertices[1] }
+               }, color) },
+
+               // Cara inferior
+               { "downside", new Cara(new Dictionary<string, Vertice>
+               {
+                   { "v1", vertices[3] },
+                   { "v2", vertices[7] },
+                   { "v3", vertices[6] },
+                   { "v4", vertices[2] }
+               }, color) }
+           };
+        return new Parte { Caras = caras };
     }
-
-    public static List<List<Vertice>> CargarVerticesDesdeArchivo(string ruta)
-    {
-        var resultado = new List<List<Vertice>>();
-        var bloqueActual = new List<Vertice>();
-
-        foreach (var linea in File.ReadLines(ruta))
-        {
-            var lineaLimpia = linea.Trim();
-            if (string.IsNullOrEmpty(lineaLimpia) || lineaLimpia.StartsWith("#"))
-            {
-                if (bloqueActual.Count > 0)
-                {
-                    resultado.Add(new List<Vertice>(bloqueActual));
-                    bloqueActual.Clear();
-                }
-                continue;
-            }
-
-            var partes = lineaLimpia.Split(' ');
-            if (partes.Length == 3 &&
-                float.TryParse(partes[0], out float x) &&
-                float.TryParse(partes[1], out float y) &&
-                float.TryParse(partes[2], out float z))
-            {
-                bloqueActual.Add(new Vertice(x, y, z));
-            }
-        }
-
-        if (bloqueActual.Count > 0)
-        {
-            resultado.Add(bloqueActual);
-        }
-
-        return resultado;
-    }
-
-
 
 }

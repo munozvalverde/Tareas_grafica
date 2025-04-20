@@ -1,11 +1,11 @@
 ﻿using OpenTK.Graphics;
-namespace Tareas_grafica;
+namespace Tareas_grafica.Figuras;
 
 public class U : Objeto
 {
-    /*public U(Vertice posicion, Color4 color) : base([], posicion)
+    public U(Vertice posicion, Color4 color) : base([], posicion)
     {
-        List<Vertice> columnaIzquierda = [
+        List<Vertice> bloqueIzquierdo = [
             new Vertice(-0.5f, 0.6f, 0.0f),   // Arriba-frontal
             new Vertice(-0.3f, 0.6f, 0.0f),   // Arriba-trasero
             new Vertice(-0.3f, -0.3f, 0.0f),  // Abajo-trasero
@@ -14,11 +14,11 @@ public class U : Objeto
             new Vertice(-0.3f, 0.6f, -0.2f),  // Arriba-trasero (profundidad)
             new Vertice(-0.3f, -0.3f, -0.2f), // Abajo-trasero (profundidad)
             new Vertice(-0.5f, -0.3f, -0.2f)  // Abajo-frontal (profundidad)
-];
+        ];
 
-        this.Partes.Add(Utils.CrearBloque3D(columnaIzquierda, color));
+        this.AgregarParte("Bloque_Izquierdo", Utils.CrearBloque(bloqueIzquierdo, color));
 
-        List<Vertice> columnaDerecha = [
+        List<Vertice> bloqueDerecho = [
             new Vertice(0.3f, 0.6f, 0.0f),    // Arriba-frontal
             new Vertice(0.5f, 0.6f, 0.0f),    // Arriba-trasero
             new Vertice(0.5f, -0.3f, 0.0f),   // Abajo-trasero
@@ -29,9 +29,9 @@ public class U : Objeto
             new Vertice(0.3f, -0.3f, -0.2f)   // Abajo-frontal (profundidad)
         ];
 
-        this.Partes.Add(Utils.CrearBloque3D(columnaDerecha, color));
+        this.AgregarParte("Bloque_Derecho", Utils.CrearBloque(bloqueDerecho, color));
 
-        List<Vertice> base = [
+        List<Vertice> baseU = [
             new Vertice(-0.3f, -0.1f, 0.0f),  // Izquierda-frontal
             new Vertice(0.3f, -0.1f, 0.0f),   // Derecha-frontal
             new Vertice(0.3f, -0.3f, 0.0f),   // Derecha-abajo-frontal
@@ -42,22 +42,9 @@ public class U : Objeto
             new Vertice(-0.3f, -0.3f, -0.2f)  // Izquierda-abajo-trasero
         ];
 
-        this.Partes.Add(Utils.CrearBloque3D(base, color));
-    }*/
-    
-
-    public U(Vertice posicion, Color4 color) : base([], posicion)
-    {
-        string rutaArchivo = "U_vertices.txt";
-        var bloques = Utils.CargarVerticesDesdeArchivo(rutaArchivo);
-
-        foreach (var bloque in bloques)
-        {
-            this.Partes.Add(Utils.CrearBloque3D(bloque, color));
-        }
+        this.AgregarParte("Base", Utils.CrearBloque(baseU, color));
+        this.Trasladar(posicion.X, posicion.Y, posicion.Z);
     }
-
-
 
 }
 

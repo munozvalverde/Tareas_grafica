@@ -13,7 +13,7 @@ public class Camara
     public float AnguloY { get; private set; }
 
     private Vector2 _lastMousePos;
-    public float MouseSensitivity { get; set; } = 5;
+    public float MouseSensitivity { get; set; } = 4;
     public float ScrollSensitivity { get; set; } = 1;
 
     // Matrices
@@ -22,7 +22,7 @@ public class Camara
 
     public Camara(float anchoVentana, float altoVentana)
     {
-        Distancia = 25.0f;
+        Distancia = 8.0f;
         AnguloX = 0.0f;
         AnguloY = 0.0f;
         Objetivo = Vector3.Zero;
@@ -62,31 +62,21 @@ public class Camara
         Distancia += deltaDistancia;
     }
 
-    public void ProcesarInput(KeyboardState keyboard)
-    {
-        if (keyboard[Key.Up]) Rotar(1.0f, 0);
-        if (keyboard[Key.Down]) Rotar(-1.0f, 0);
-        if (keyboard[Key.Right]) Rotar(0, -1.0f);
-        if (keyboard[Key.Left]) Rotar(0, 1.0f);
-        if (keyboard[Key.F]) AcercarAlejar(-0.1f);
-        if (keyboard[Key.B]) AcercarAlejar(0.1f);
-    }
-
     public void ProcesarMouse(MouseState mouse, MouseState lastMouse, float deltaTime)
     {
-        // Rotación solo cuando el botón izquierdo está presionado
+        // para rotar cuando el botón izquierdo is clicked
         if (mouse.IsButtonDown(MouseButton.Left))
         {
-            // Calcula el delta de movimiento (invertido para dirección correcta)
-            var deltaX = lastMouse.X - mouse.X;  // Invertido para dirección natural
-            var deltaY = lastMouse.Y - mouse.Y;  // Invertido para dirección natural
+            // calcula el delta de movimiento (invertido)
+            var deltaX = lastMouse.X - mouse.X;  // invertido para dirección natural
+            var deltaY = lastMouse.Y - mouse.Y;  // invertido para dirección natural
 
             // Aplica rotación con suavizado por deltaTime
             Rotar(deltaY * MouseSensitivity * deltaTime,
                   deltaX * MouseSensitivity * deltaTime);
         }
 
-        // Zoom con rueda del mouse (más sensible)
+        // zoom con mouse wheel
         var scrollDelta = mouse.ScrollWheelValue - lastMouse.ScrollWheelValue;
         if (scrollDelta != 0)
         {
