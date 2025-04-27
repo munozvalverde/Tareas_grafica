@@ -19,7 +19,7 @@ public class Serializador
             {
                     new JsonStringEnumConverter(),
                     new Color4Converter()
-                },
+            },
         };
     }
     public static string ObtenerRutaCompleta(string nombreArchivo)

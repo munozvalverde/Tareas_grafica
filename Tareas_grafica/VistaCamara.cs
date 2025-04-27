@@ -2,7 +2,7 @@
 using OpenTK;
 namespace Tareas_grafica;
 
-public class Camara
+public class VistaCamara
 {
     // Propiedades de la cámara
     public Vector3 Posicion { get; private set; }
@@ -20,7 +20,7 @@ public class Camara
     public Matrix4 Vista;
     public Matrix4 Proyeccion;
 
-    public Camara(float anchoVentana, float altoVentana)
+    public VistaCamara(float anchoVentana, float altoVentana)
     {
         Distancia = 8.0f;
         AnguloX = 0.0f;
@@ -64,14 +64,14 @@ public class Camara
 
     public void ProcesarMouse(MouseState mouse, MouseState lastMouse, float deltaTime)
     {
-        // para rotar cuando el botón izquierdo is clicked
+        // para rotar cuando el botón izquierdo está presionado
         if (mouse.IsButtonDown(MouseButton.Left))
         {
             // calcula el delta de movimiento (invertido)
-            var deltaX = lastMouse.X - mouse.X;  // invertido para dirección natural
-            var deltaY = lastMouse.Y - mouse.Y;  // invertido para dirección natural
+            var deltaX = lastMouse.X - mouse.X;
+            var deltaY = lastMouse.Y - mouse.Y;
 
-            // Aplica rotación con suavizado por deltaTime
+            // aplica rotación con suavizado por deltaTime
             Rotar(deltaY * MouseSensitivity * deltaTime,
                   deltaX * MouseSensitivity * deltaTime);
         }

@@ -7,7 +7,7 @@ public class Cara
 {
     public Dictionary<String, Vertice> Vertices { get; set; } = new Dictionary<string, Vertice>();
     public Color4 Color { get; set; }
-    public Vertice Centro { get; set; } = new Vertice();
+    public Vertice CentroCara { get; set; } = new Vertice();
     public Cara(Dictionary<String, Vertice> vertices, Color4 color = default)
     {
         this.Vertices = vertices;
@@ -32,12 +32,12 @@ public class Cara
 
     public void SetCentro(Vertice centro)
     {
-        Centro = centro;
+        CentroCara = centro;
     }
 
     public void Trasladar(float deltaX, float deltaY, float deltaZ)
     {
-        // crear la matriz de traslación
+        // para crear matriz de traslación
         Matrix4 traslacion = Matrix4.CreateTranslation(deltaX, deltaY, deltaZ);
 
         foreach (var key in Vertices.Keys.ToList())
@@ -47,26 +47,24 @@ public class Cara
             var result = Vector4.Transform(v4, traslacion); // Aplicar la matriz de traslación
             Vertices[key] = new Vertice(result.X, result.Y, result.Z); // Actualizar el vértice
         }
-        CalcularCentro();
+        CalcularCentroCara();
     }
 
     public void Escalar(float factor)
     {
-        // 1. crear matriz de transformación compuesta
-        Vector3 centro = new Vector3(Centro.X, Centro.Y, Centro.Z); // Convertir Centro a Vector3
+        // crear matriz de transformación compuesta
+        Vector3 centro = new Vector3(CentroCara.X, CentroCara.Y, CentroCara.Z); // Convertir Centro a Vector3
         Matrix4 transformacion =
-            Matrix4.CreateTranslation(-centro) *  // Paso 1: Mover al origen
-            Matrix4.CreateScale(factor) *         // Paso 2: Aplicar escalado
-            Matrix4.CreateTranslation(centro);    // Paso 3: Volver a posición
+            Matrix4.CreateTranslation(-centro) *  
+            Matrix4.CreateScale(factor) *         
+            Matrix4.CreateTranslation(centro);    
 
-        // 2. aplicar a todos los vértices
+        // se apliica a todos los vértices
         foreach (var key in Vertices.Keys.ToList())
         {
             Vertice v = Vertices[key];
-            Vector4 verticeTransformado = Vector4.Transform(
-                new Vector4(v.X, v.Y, v.Z, 1.0f),
-                transformacion
-            );
+            Vector4 v4 = new Vector4(v.X, v.Y, v.Z, 1); // cnvertir a Vector4 para la transformación
+            Vector4 verticeTransformado = Vector4.Transform(v4,transformacion);
 
             Vertices[key] = new Vertice(
                 verticeTransformado.X,
@@ -76,30 +74,30 @@ public class Cara
         }
     }
 
-    public void Rotar(float angX, float angY, float angZ)
+    public void Rotar(float anguloX, float anguloY, float anguloZ)
     {
-        Vector3 centroVector = new Vector3(Centro.X, Centro.Y, Centro.Z); // Convertir Centro a Vector3
+        Vector3 centroVector = new Vector3(CentroCara.X, CentroCara.Y, CentroCara.Z); // coonvertir Centro a Vector3
 
         Matrix4 rotacion =
             Matrix4.CreateTranslation(-centroVector) *
-            Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(angZ)) *
-            Matrix4.CreateRotationY(MathHelper.DegreesToRadians(angY)) *
-            Matrix4.CreateRotationX(MathHelper.DegreesToRadians(angX)) *
+            Matrix4.CreateRotationZ(MathHelper.DegreesToRadians(anguloZ)) *  
+            Matrix4.CreateRotationY(MathHelper.DegreesToRadians(anguloY)) * 
+            Matrix4.CreateRotationX(MathHelper.DegreesToRadians(anguloX)) *
             Matrix4.CreateTranslation(centroVector);
 
-        foreach (var key in Vertices.Keys.ToList())
+        foreach (var id in Vertices.Keys.ToList())
         {
-            var v = Vertices[key];
+            var v = Vertices[id];
             var v4 = new Vector4(v.X, v.Y, v.Z, 1);
             var result = Vector4.Transform(v4, rotacion);
-            Vertices[key] = new Vertice(result.X, result.Y, result.Z);
+            Vertices[id] = new Vertice(result.X, result.Y, result.Z);
         }
     }
 
-    public void CalcularCentro()
+    public void CalcularCentroCara()
     {
         if (Vertices.Count == 0)
-            Centro = new Vertice(0, 0, 0);
+            CentroCara = new Vertice(0, 0, 0);
 
         float minX = float.MaxValue, minY = float.MaxValue, minZ = float.MaxValue;
         float maxX = float.MinValue, maxY = float.MinValue, maxZ = float.MinValue;
@@ -120,6 +118,7 @@ public class Cara
         float centroY = (minY + maxY) / 2;
         float centroZ = (minZ + maxZ) / 2;
 
-        Centro = new Vertice(centroX, centroY, centroZ);
+        CentroCara = new Vertice(centroX, centroY, centroZ);
     }
+
 }

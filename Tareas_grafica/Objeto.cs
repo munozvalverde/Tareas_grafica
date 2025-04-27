@@ -21,11 +21,11 @@ public class Objeto
         Partes[id] = parte;
     }
 
-    public void EliminarParte(string id)
-    {
-        if (Partes.ContainsKey(id))
-            Partes.Remove(id);
-    }
+    //public void EliminarParte(string id)
+    //{
+    //    if (Partes.ContainsKey(id))
+    //        Partes.Remove(id);
+    //}
 
     public Parte? ObtenerParte(string id)
     {
@@ -44,14 +44,14 @@ public class Objeto
 
     }
 
-    public void Rotar(float angX, float angY, float angZ)
+    public void Rotar(float anguloX, float anguloY, float anguloZ)
     {
-        Vertice centro = CalcularCentro();
+        Vertice centroObjeto = CalcularCentroObjeto();
         foreach (var parte in Partes.Values)
             foreach (var cara in parte.Caras.Values)
             {
-                cara.SetCentro(centro);
-                cara.Rotar(angX, angY, angZ);
+                cara.SetCentro(centroObjeto);
+                cara.Rotar(anguloX, anguloY, anguloZ);
             }
     }
     public void Trasladar(float deltaX, float deltaY, float deltaZ)
@@ -60,7 +60,7 @@ public class Objeto
             parte.Trasladar(deltaX, deltaY, deltaZ);
     }
 
-    private Vertice CalcularCentro()
+    private Vertice CalcularCentroObjeto()
     {
         var vertices = Partes.Values.SelectMany(p => p.Caras.Values)
                                     .SelectMany(c => c.Vertices.Values).ToList();
@@ -69,11 +69,11 @@ public class Objeto
 
     public void Escalar(float factor)
     {
-        Vertice centro = CalcularCentro();
+        Vertice centroObjeto = CalcularCentroObjeto();
         foreach (var parte in Partes.Values)
             foreach (var cara in parte.Caras.Values)
             {
-                cara.SetCentro(centro);
+                cara.SetCentro(centroObjeto);
                 cara.Escalar(factor);
             }
     }

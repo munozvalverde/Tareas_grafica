@@ -10,26 +10,26 @@ public class U : Objeto
             new Vertice(-0.3f, 0.6f, 0.0f),   // Arriba-trasero
             new Vertice(-0.3f, -0.3f, 0.0f),  // Abajo-trasero
             new Vertice(-0.5f, -0.3f, 0.0f),  // Abajo-frontal
-            new Vertice(-0.5f, 0.6f, -0.2f),  // Arriba-frontal (profundidad)
-            new Vertice(-0.3f, 0.6f, -0.2f),  // Arriba-trasero (profundidad)
-            new Vertice(-0.3f, -0.3f, -0.2f), // Abajo-trasero (profundidad)
-            new Vertice(-0.5f, -0.3f, -0.2f)  // Abajo-frontal (profundidad)
+            new Vertice(-0.5f, 0.6f, -0.2f),  // Arriba-frontal
+            new Vertice(-0.3f, 0.6f, -0.2f),  // Arriba-trasero
+            new Vertice(-0.3f, -0.3f, -0.2f), // Abajo-trasero
+            new Vertice(-0.5f, -0.3f, -0.2f)  // Abajo-frontal
         ];
 
-        this.AgregarParte("Bloque_Izquierdo", Utils.CrearBloque(bloqueIzquierdo, color));
+        this.AgregarParte("Vertical1", Auxiliar.CrearBloque(bloqueIzquierdo, color));
 
         List<Vertice> bloqueDerecho = [
             new Vertice(0.3f, 0.6f, 0.0f),    // Arriba-frontal
             new Vertice(0.5f, 0.6f, 0.0f),    // Arriba-trasero
             new Vertice(0.5f, -0.3f, 0.0f),   // Abajo-trasero
             new Vertice(0.3f, -0.3f, 0.0f),   // Abajo-frontal
-            new Vertice(0.3f, 0.6f, -0.2f),  // Arriba-frontal (profundidad)
-            new Vertice(0.5f, 0.6f, -0.2f),   // Arriba-trasero (profundidad)
-            new Vertice(0.5f, -0.3f, -0.2f),  // Abajo-trasero (profundidad)
-            new Vertice(0.3f, -0.3f, -0.2f)   // Abajo-frontal (profundidad)
+            new Vertice(0.3f, 0.6f, -0.2f),  // Arriba-frontal
+            new Vertice(0.5f, 0.6f, -0.2f),   // Arriba-trasero
+            new Vertice(0.5f, -0.3f, -0.2f),  // Abajo-trasero
+            new Vertice(0.3f, -0.3f, -0.2f)   // Abajo-frontal
         ];
 
-        this.AgregarParte("Bloque_Derecho", Utils.CrearBloque(bloqueDerecho, color));
+        this.AgregarParte("Vertical2", Auxiliar.CrearBloque(bloqueDerecho, Color4.White));
 
         List<Vertice> baseU = [
             new Vertice(-0.3f, -0.1f, 0.0f),  // Izquierda-frontal
@@ -42,7 +42,7 @@ public class U : Objeto
             new Vertice(-0.3f, -0.3f, -0.2f)  // Izquierda-abajo-trasero
         ];
 
-        this.AgregarParte("Base", Utils.CrearBloque(baseU, color));
+        this.AgregarParte("Horizontal1", Auxiliar.CrearBloque(baseU, color));
         this.Trasladar(posicion.X, posicion.Y, posicion.Z);
     }
 

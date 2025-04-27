@@ -21,7 +21,7 @@ public class Cubo : Objeto
             new Vertice(-0.5f, -0.5f, -0.5f)  // 7 - Atrás abajo izquierda
         ];
 
-        this.AgregarParte("Cubo", Utils.CrearBloque(cubo, color));
+        this.AgregarParte("Vertical1", Auxiliar.CrearBloque(cubo, color));
         this.Trasladar(posicion.X, posicion.Y, posicion.Z);
     }
 }

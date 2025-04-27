@@ -1,12 +1,12 @@
 ﻿using OpenTK.Graphics;
 namespace Tareas_grafica;
 
-public static class Utils
+public static class Auxiliar
 {
     public static Parte CrearBloque(List<Vertice> vertices, Color4 color)
     {
         if (vertices.Count != 8)
-            throw new ArgumentException("Se requieren 8 vértices para dibujar un bloque");
+            throw new ArgumentException("Son necesarios 8 vértices");
 
         var caras = new Dictionary<string, Cara>
            {
